@@ -2,7 +2,9 @@
 project(${PROJECT_NAME}-c)
 
 add_executable(${PROJECT_NAME} 
-                main.c)
+                ${CMAKE_CURRENT_LIST_DIR}/main.c
+                ${CMAKE_CURRENT_LIST_DIR}/led_controller.c ${CMAKE_CURRENT_LIST_DIR}/../include/led_controller.h
+                ${CMAKE_CURRENT_LIST_DIR}/temp_manager.c ${CMAKE_CURRENT_LIST_DIR}/../include/temp_manager.h)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
                         hal)

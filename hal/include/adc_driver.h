@@ -51,16 +51,6 @@ void HAL_ADC_start_conversison(void) ;
 bool HAL_ADC_init(uint16_t period) ;
 
 /**
- * @brief ADC Deinit Shutdown
- * 
- * This function will deinit and stop ADC.
- * 
- * @param none
- * @return void
- */
-void HAL_ADC_shutdown() ;
-
-/**
  * @brief read ADC sampled value
  * 
  * This function will read ADC sampled value.
@@ -69,5 +59,26 @@ void HAL_ADC_shutdown() ;
  * @return uint16_t ADC value
  */
 uint16_t HAL_ADC_read(void) ;
+
+/**
+ * @brief check if new data available
+ * 
+ * This function will check if new data available
+ * just once and reset flag until it is set again.
+ * 
+ * @param none
+ * @return bool if new value available
+ */
+bool HAL_ADC_is_new_data_available(void) ;
+
+/**
+ * @brief ADC Deinit Shutdown
+ * 
+ * This function will deinit and stop ADC.
+ * 
+ * @param none
+ * @return void
+ */
+void HAL_ADC_shutdown() ;
 
 #endif /* ADC_DRIVER_H */

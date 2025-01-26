@@ -7,11 +7,12 @@
 /******************************************************************************
  *                  MOCK HARDWARE REGISTER DEFINITIONS SECTION
  *****************************************************************************/
+#define  GPIO_PIN_COUNT  4
 
 /******************************************************************************
  *                    GLOBAL VARIABLES DEFINITIONS SECTION
  *****************************************************************************/
-
+static bool g_is_pin_init[GPIO_PIN_COUNT];
 
 /******************************************************************************
  *                    PUBLIC FUNCTIONS DEFINITIONS SECTION
@@ -24,10 +25,15 @@
  * 
  * @param pin uint8_t pin number
  * @param mode gpio_mode_t pin mode of operation
- * @return void
+ * @return true if successful
  */
-void HAL_gpio_init(uint8_t pin, gpio_mode_t mode) {
-    
+bool HAL_gpio_init(uint8_t pin, gpio_mode_t mode) {
+    if ((pin >= GPIO_PIN_COUNT)) {
+        return false;
+    }
+    g_is_pin_init[pin] = true;
+    /* init hardware */
+    return true;
 }
 
 /**
@@ -39,8 +45,17 @@ void HAL_gpio_init(uint8_t pin, gpio_mode_t mode) {
  * @param state gpio_state_t pin state
  * @return void
  */
-void HAL_gpio_set(uint8_t pin, gpio_state_t state) {
+bool HAL_gpio_set(uint8_t pin, gpio_state_t state) {
+    if ((pin >= GPIO_PIN_COUNT)) {
+        return false;
+    }
 
+    if (!g_is_pin_init[pin]) {
+        return false;
+    }
+    
+    /* Set state */
+    return true;
 }
 
 /**
@@ -49,10 +64,25 @@ void HAL_gpio_set(uint8_t pin, gpio_state_t state) {
  * This function will read the pin state.
  * 
  * @param pin uint8_t pin number
+ * @param pin uint8_t pin number
  * @return gpio_state_t gpio state
  */
-gpio_state_t HAL_gpio_read(uint8_t pin) {
-    return GPIO_STATE_HIGH;
+bool HAL_gpio_get(uint8_t pin, gpio_state_t *state) {
+    if ((pin >= GPIO_PIN_COUNT)) {
+        return false;
+    }
+
+    if (!g_is_pin_init[pin]) {
+        return false;
+    }
+
+    if (!state) {
+        return false;
+    }
+    
+    /* Return state */
+    *state = GPIO_STATE_HIGH;
+    return true;
 }
 
 /**
@@ -64,5 +94,5 @@ gpio_state_t HAL_gpio_read(uint8_t pin) {
  * @return void
  */
 void HAL_gpio_toggle(uint8_t pin) {
-
+    /* Unused */
 }

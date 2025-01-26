@@ -60,7 +60,7 @@ typedef struct {
  * @param mode gpio_mode_t pin mode of operation
  * @return void
  */
-void HAL_gpio_init(uint8_t pin, gpio_mode_t mode);
+bool HAL_gpio_init(uint8_t pin, gpio_mode_t mode);
 
 /**
  * @brief set GPIO status
@@ -71,7 +71,7 @@ void HAL_gpio_init(uint8_t pin, gpio_mode_t mode);
  * @param state gpio_state_t pin state
  * @return void
  */
-void HAL_gpio_set(uint8_t pin, gpio_state_t state);
+bool HAL_gpio_set(uint8_t pin, gpio_state_t state);
 
 /**
  * @brief read GPIO state
@@ -81,7 +81,7 @@ void HAL_gpio_set(uint8_t pin, gpio_state_t state);
  * @param pin uint8_t pin number
  * @return gpio_state_t gpio state
  */
-gpio_state_t HAL_gpio_read(uint8_t pin);
+bool HAL_gpio_get(uint8_t pin, gpio_state_t *state);
 
 /**
  * @brief toggle GPIO state

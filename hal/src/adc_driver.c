@@ -24,6 +24,7 @@
  *****************************************************************************/
 
 volatile uint16_t g_adc_value = 0;  // Store ADC result
+volatile bool g_adc_is_new_value_available = false;
 static bool g_is_ADC_init = false;
 
 /******************************************************************************
@@ -41,6 +42,7 @@ static bool g_is_ADC_init = false;
 void HAL_ADC_irq_handler(void) {
     if (ADC_ISR_FLAG) {
         g_adc_value = ADC_RESULT_REGISTER;  // Read ADC result
+        g_adc_is_new_value_available = true;
         // Clear ADC interrupt flag (mock)
         ADC_CLEAR_INTERRUPT();
     }
@@ -100,6 +102,41 @@ bool HAL_ADC_init(uint16_t period) {
 }
 
 /**
+ * @brief read ADC sampled value
+ * 
+ * This function will read ADC sampled value.
+ * 
+ * @param none
+ * @return uint16_t ADC value
+ */
+uint16_t HAL_ADC_read(void) {
+    /* Protect against concurrent access */
+    __disable_irq();
+    uint16_t value = g_adc_value;
+    __enable_irq();
+    return value;
+}
+
+/**
+ * @brief check if new data available
+ * 
+ * This function will check if new data available
+ * just once and reset flag until it is set again.
+ * 
+ * @param none
+ * @return bool if new value available
+ */
+bool HAL_ADC_is_new_data_available(void) {
+    /* Protect against concurrent access */
+    __disable_irq();
+    bool value = g_adc_is_new_value_available;
+    /* Reset value */
+    g_adc_is_new_value_available = false;
+    __enable_irq();
+    return value;
+}
+
+/**
  * @brief ADC Deinit Shutdown
  * 
  * This function will deinit and stop ADC.
@@ -118,20 +155,4 @@ void HAL_ADC_shutdown() {
     ADC_DEINIT();
 
     __enable_irq();
-}
-
-/**
- * @brief read ADC sampled value
- * 
- * This function will read ADC sampled value.
- * 
- * @param none
- * @return uint16_t ADC value
- */
-uint16_t HAL_ADC_read(void) {
-    /* Protect against concurrent access */
-    __disable_irq();
-    uint16_t value = g_adc_value;
-    __enable_irq();
-    return value;
 }
