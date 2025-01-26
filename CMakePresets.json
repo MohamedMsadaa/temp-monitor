@@ -1,0 +1,19 @@
+{
+    "version": 3,
+    "cmakeMinimumRequired": {
+      "major": 3,
+      "minor": 26,
+      "patch": 0
+    },
+    "configurePresets": [
+      {
+        "name": "arm-debug",
+        "description": "Configure for arm Debug build",
+        "generator": "Ninja",
+        "binaryDir": "${sourceDir}/build/debug",
+        "cacheVariables": {
+          "CMAKE_BUILD_TYPE": "Debug"
+        }
+      }
+    ]
+  }
