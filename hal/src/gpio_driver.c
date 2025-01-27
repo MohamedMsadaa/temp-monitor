@@ -28,6 +28,7 @@ static bool g_is_pin_init[GPIO_PIN_COUNT];
  * @return true if successful
  */
 bool HAL_gpio_init(uint8_t pin, gpio_mode_t mode) {
+    (void)mode;
     if ((pin >= GPIO_PIN_COUNT)) {
         return false;
     }
@@ -46,6 +47,7 @@ bool HAL_gpio_init(uint8_t pin, gpio_mode_t mode) {
  * @return void
  */
 bool HAL_gpio_set(uint8_t pin, gpio_state_t state) {
+    (void)state;
     if ((pin >= GPIO_PIN_COUNT)) {
         return false;
     }
@@ -95,4 +97,5 @@ bool HAL_gpio_get(uint8_t pin, gpio_state_t *state) {
  */
 void HAL_gpio_toggle(uint8_t pin) {
     /* Unused */
+    (void)pin;
 }

@@ -133,6 +133,9 @@ bool HAL_ADC_is_new_data_available(void) {
     /* Reset value */
     g_adc_is_new_value_available = false;
     __enable_irq();
+
+    /* For PC simulation set value to true */
+    value = true;
     return value;
 }
 

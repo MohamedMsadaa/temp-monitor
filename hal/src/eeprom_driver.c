@@ -42,6 +42,7 @@ bool HAL_eeprom_init() {
  */
 bool HAL_eeprom_read(uint32_t address, uint32_t *value) {
     /* Read EEPROM from address */
+    (void)address;
     if (!value) {
         return false;
     }
@@ -61,6 +62,7 @@ bool HAL_eeprom_read(uint32_t address, uint32_t *value) {
  */
 bool HAL_eeprom_read_string(uint32_t address, char *value, uint32_t size) {
     /* Read EEPROM from address */
+    (void)address;
     if (!value) {
         return false;
     }

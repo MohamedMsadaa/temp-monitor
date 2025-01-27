@@ -58,7 +58,7 @@ bool temp_manager_init(void) ;
  * @param none
  * @return temp_status_t status of temp critical / ...
  */
-temp_status_t temp_manager_read_status() ;
+temp_status_t temp_manager_evaluate_status() ;
 
 /**
  * @brief check if new value is available

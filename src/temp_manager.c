@@ -95,7 +95,7 @@ bool temp_manager_init(void) {
  * @param none
  * @return temp_status_t status of temp critical / ...
  */
-temp_status_t temp_manager_read_status() {
+temp_status_t temp_manager_evaluate_status() {
     float temp_value = 0.0f;
     temp_status_t status = TEMP_STATUS_INVALID;
 

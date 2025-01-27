@@ -1,19 +1,32 @@
 {
     "version": 3,
     "cmakeMinimumRequired": {
-      "major": 3,
-      "minor": 26,
-      "patch": 0
+        "major": 3,
+        "minor": 26,
+        "patch": 0
     },
     "configurePresets": [
-      {
-        "name": "arm-debug",
-        "description": "Configure for arm Debug build",
-        "generator": "Ninja",
-        "binaryDir": "${sourceDir}/build/debug",
-        "cacheVariables": {
-          "CMAKE_BUILD_TYPE": "Debug"
+        {
+            "name": "debug-c",
+            "description": "Configure for Debug build (C version)",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/debug-c",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "PROJECT_LANGUAGE": "C",
+                "CMAKE_C_FLAGS": "-Wall -Wextra -Werror"
+            }
+        },
+        {
+            "name": "debug-cpp",
+            "description": "Configure for Debug build (C++ version)",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/debug-cpp",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "PROJECT_LANGUAGE": "CXX",
+                "CMAKE_CXX_FLAGS": "-Wall -Wextra -Werror"
+            }
         }
-      }
     ]
-  }
+}

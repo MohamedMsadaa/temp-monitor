@@ -98,6 +98,23 @@ bool led_controller_set_state(led_id_t id, led_state_t state) {
 }
 
 /**
+ * @brief set gyr led state
+ * .
+ * 
+ * @param green led_state_t state of green led
+ * @param yellow led_state_t state of yellow led
+ * @param red led_state_t state of red led
+ * @return bool true if successful
+ */
+bool led_controller_set_leds_state(led_state_t green_state, led_state_t yellow_state, led_state_t red_state) {
+    bool result = true;
+    result &= led_controller_set_state(LED_GREEN_ID, green_state);
+    result &= led_controller_set_state(LED_YELLOW_ID, yellow_state);
+    result &= led_controller_set_state(LED_RED_ID, red_state);
+    return result;
+}
+
+/**
  * @brief led get state
  * 
  * This function will read the led state.

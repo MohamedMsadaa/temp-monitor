@@ -57,6 +57,7 @@ void HAL_timer_irq_handler(void) {
  */
 bool HAL_timer_init(uint16_t period, callback_t callback, bool auto_start) {
     /* TODO Configure HW Timer interruption */
+    (void)period;
     TIMER_INIT();
 
     /* configure timer period */

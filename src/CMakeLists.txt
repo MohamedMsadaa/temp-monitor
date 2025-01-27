@@ -1,16 +1,25 @@
 
-project(${PROJECT_NAME}-c)
+# Set C standard
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_C_STANDARD_REQUIRED YES)
 
-add_executable(${PROJECT_NAME} 
-                ${CMAKE_CURRENT_LIST_DIR}/main.c
-                ${CMAKE_CURRENT_LIST_DIR}/led_controller.c ${CMAKE_CURRENT_LIST_DIR}/../include/led_controller.h
-                ${CMAKE_CURRENT_LIST_DIR}/temp_manager.c ${CMAKE_CURRENT_LIST_DIR}/../include/temp_manager.h)
+# Collect all the source files in the current directory and source directories
+file(GLOB_RECURSE SOURCES
+    ${CMAKE_CURRENT_LIST_DIR}/*.c
+)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE
-                        hal)
+# Collect all header files in the include directories
+file(GLOB_RECURSE HEADERS
+    ${CMAKE_CURRENT_LIST_DIR}/../include/*.h
+)
 
+# Add the executable and link the sources
+add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
+
+# Link the hardware abstraction layer (HAL)
+target_link_libraries(${PROJECT_NAME} PRIVATE hal)
+
+# Specify include directories for the target
 target_include_directories(${PROJECT_NAME} PUBLIC
-    ${CMAKE_CURRENT_LIST_DIR}/../include)
-
-# Installing the project executable
-install(TARGETS ${PROJECT_NAME} DESTINATION bin)
+    ${CMAKE_CURRENT_LIST_DIR}/../include
+)
