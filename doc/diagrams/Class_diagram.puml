@@ -1,0 +1,59 @@
+@startuml
+allowmixing
+
+package "Hardware Abstraction Layer" {
+  component GPIO  
+  component EEPROM
+  component ADC
+  component TIMER
+}
+
+class Sensor {
+    -int m_sampling_periode
+    bool init()
+    uint16_t read_raw_adc_value()
+    void deinit()
+}
+
+class LedController {
+    bool init()
+    bool set_state(id, state)
+    bool get_state(id, state)
+    void shutdown()
+}
+
+class SensorRevA {
+    +bool read_temperature(float)
+}
+
+class SensorRevB {
+    +bool read_temperature(float)
+}
+
+class SensorFactory {
+    +Sensor* create_sensor()
+}
+
+class TempManager {
+    -static TempManager* instance
+    -Sensor* sensor
+    -LedController* led_controller
+    +bool init(Sensor*, LedController*)
+    +void monitor_temperature()
+    +void shutdown()
+}
+
+' Ensure central positioning of TempManager
+SensorFactory --> SensorRevA : Create
+SensorFactory --> SensorRevB : Create
+SensorRevA ..|> Sensor
+SensorRevB ..|> Sensor
+
+TempManager -> Sensor : Uses
+TempManager -left-> LedController : Uses
+
+Sensor -down-> ADC 
+Sensor -down-> TIMER
+LedController -down-> GPIO
+
+@enduml

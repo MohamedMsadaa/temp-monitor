@@ -1,0 +1,33 @@
+@startuml
+actor Main as User
+
+participant "HAL (EEPROM)" as HAL_EEPROM
+participant "SensorFactory" as SensorFactory
+participant "Sensor (RevA or RevB)" as Sensor
+participant "HAL (ADC)" as HAL_ADC
+participant "HAL (TIMER)" as HAL_TIMER
+participant "LedController" as LedController
+participant "HAL (GPIO)" as HAL_GPIO
+participant "TempManager" as TempManager
+
+User -> HAL_EEPROM : init()
+HAL_EEPROM --> User : EEPROM initialized
+
+User -> SensorFactory : createSensor()
+SensorFactory -> Sensor : create()
+
+User -> TempManager : init(Sensor, LedController)
+TempManager -> Sensor : init()
+Sensor -> HAL_ADC : init()
+HAL_ADC -> HAL_TIMER : init()
+HAL_TIMER --> HAL_ADC : TIMER initialized
+HAL_ADC --> Sensor : ADC initialized
+Sensor --> TempManager : Sensor initialized
+
+TempManager -> LedController : init()
+LedController -> HAL_GPIO : init()
+HAL_GPIO --> LedController : GPIO initialized
+LedController --> TempManager : LedController initialized
+
+TempManager --> User : Initialization complete
+@enduml

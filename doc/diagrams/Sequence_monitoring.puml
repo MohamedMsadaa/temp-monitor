@@ -1,0 +1,32 @@
+@startuml
+participant "HAL (EEPROM)" as HAL_EEPROM
+participant "SensorFactory" as SensorFactory
+participant "Sensor (RevA or RevB)" as Sensor
+participant "HAL (ADC)" as HAL_ADC
+participant "HAL (TIMER)" as HAL_TIMER
+participant "LedController" as LedController
+participant "HAL (GPIO)" as HAL_GPIO
+participant "TempManager" as TempManager
+
+loop Infinite Loop
+    TempManager -> TempManager : monitor()
+
+    TempManager -> Sensor : is_new_data_available()
+    Sensor -> HAL_ADC : check_interrupt()
+    HAL_ADC --> Sensor : Conversion finished (interrupt every 100us)
+    Sensor --> TempManager : New data available
+
+    TempManager -> Sensor : read_temperature()
+    Sensor --> TempManager : Temperature value
+
+    TempManager -> TempManager : evaluate_status()
+    TempManager -> LedController : set_led_status()
+    LedController -> HAL_GPIO : update_gpio_state()
+    HAL_GPIO --> LedController : LED state updated
+
+    TempManager -> TempManager : compute_elapsed_time()
+    alt Elapsed time < 100us
+        TempManager -> TempManager : sleep(100us - elapsed_time)
+    end
+end
+@enduml

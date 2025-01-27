@@ -22,9 +22,6 @@ namespace tmon = tempMonitor;
  * @return bool true if successful
  */
 std::unique_ptr<tmon::Sensor> tmon::SensorFactory::create_sensor(uint32_t sampling_periode) {
-    /* Init EEPROM */
-    HAL_eeprom_init();
-
     uint32_t value ;
     if (HAL_eeprom_read(EEPROM_HW_REV_ADDR, &value)) {
         auto hw_rev = static_cast<Hardware>(value);

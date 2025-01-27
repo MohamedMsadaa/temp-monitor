@@ -88,7 +88,7 @@ bool tmon::Manager::init(void) {
     }
 
     /* Init controller */
-    if(!m_sensor->init()) {
+    if(!m_led_controller->init()) {
         std::cerr << "[ERROR] Initializing led controlle!" << std::endl;
         return false;
     }
@@ -159,6 +159,7 @@ void tmon::Manager::monitor_temperature(void) {
             std::cerr << "[ERROR] controlling LED!" << std::endl;
         }
     }
+    previous_status = status;
 
     start_time = current_time;
 }

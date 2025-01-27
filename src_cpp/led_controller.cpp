@@ -1,4 +1,6 @@
 
+#include <iostream>
+
 extern "C" {
     #include "gpio_driver.h"
     #include "interruption.h"
@@ -90,11 +92,15 @@ bool tmon::LedController::init(void) {
 bool tmon::LedController::set_state(tmon::Led id, tmon::LedState state) {
     if ((id < tmon::Led::Green) & (id > tmon::Led::Red)) {
         return false;
+        std::cerr << "[ERROR] Invalid led range LED ID" << static_cast<int>(id) << std::endl;
     }
 
     if (!m_is_init) {
         return false;
+        std::cerr << "[ERROR] Led controller not initialized " << std::endl;
     }
+
+    std::cout << "[INFO] LED " << static_cast<int>(id) << " Set to " << static_cast<int>(state) << std::endl;
     
     return HAL_gpio_set(static_cast<uint8_t>(id), convert_led_2_gpio_state(state));
 }

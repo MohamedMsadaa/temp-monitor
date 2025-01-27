@@ -20,11 +20,7 @@ namespace tmon = tempMonitor;
  */
 bool tmon::Sensor::init() {
     auto result = true;
-
-    // result &= HAL_eeprom_init();
-    // /* Read EEPROM hw rev and stored in RAM for fast access */
-    // result &= HAL_eeprom_read(EEPROM_HW_REV_ADDR, &g_hw_rev);
-
+    
     /* Init ADC */
     result &= HAL_ADC_init(m_sampling_periode);
 

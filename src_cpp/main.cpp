@@ -13,6 +13,10 @@
  * @note This project is designed for demo purposes with mocked hardware.
  */
 
+extern "C" {
+    #include "eeprom_driver.h"
+}
+
 #include "led_controller.hpp"
 #include "sensor_factory.hpp"
 #include "temp_sensor.hpp"
@@ -23,6 +27,9 @@ namespace tmon = tempMonitor;
 static constexpr uint32_t CfgSamplingPeriod = 100;
 
 int main() {
+    /* Init EEPROM */
+    HAL_eeprom_init();
+
     /* Create instance sensor and LED controller */
     auto sensor = tmon::SensorFactory::create_sensor(CfgSamplingPeriod);
     auto led_controller = std::make_unique<tmon::LedController>();
